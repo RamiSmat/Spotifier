@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-
+import Song from "./songModel.js"
 const userSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -25,27 +25,13 @@ const userSchema = new mongoose.Schema({
             required: true
         },
         songs: [{
-            title: {
-                type: String,
-                required: true
-            },
-            artist: String,
-            youtubeId: {
-                type: String,
-                required: true
-            }
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Song',
         }]
     }],
     favorites: [{
-        title: {
-            type: String,
-            required: true
-        },
-        artist: String,
-        youtubeId: {
-            type: String,
-            required: true
-        }
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Song',
     }],
     followers: [{
         type: mongoose.Schema.Types.ObjectId,

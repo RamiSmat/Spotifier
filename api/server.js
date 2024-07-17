@@ -4,6 +4,7 @@ import cors from 'cors';
 import dbConnect from './config/db.mjs';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoute.js';
+import songRoutes from './routes/songRoutes.js'
 import passport from './config/passport.js';
 import session from 'express-session';
 
@@ -25,6 +26,7 @@ app.use(passport.session());
 dbConnect();
 
 app.use('/api/auth', userRoutes);
+app.use('/api/song',songRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

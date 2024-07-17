@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
-
+import Song from '../models/songModel.js';
 const register = async (userData) => {
     const { name, email, password } = userData;
 
@@ -145,6 +145,29 @@ const unfollowUser = async (userId,unfollowUserId) => {
 }
 
 
+const addToFavorites = async (songId,userId) =>{
+    try{
+        const user = await User.findById(userId); 
+        const song = await Song.findById(songId);
+        if (user.favorites.includes(song)) return console.log("Song is already a favorite");
+        user.favorites.push(song);
+        return user;
+    }catch(error){
+        return error;
+    }
+};
+
+const removeFromFavorites = async (songId,userId) => {
+    try{
+        const user = await User.findById(userId); 
+        const song = await Song.findById(songId);
+        if (!user.favorites.includes(song)) return console.log("Song is not a favorite to this user");
+        user.favorites.pull(song);
+        return user;
+    }catch(error){
+        return error;
+    }
+}
 export {
     getFollowers,
     followUser, 
@@ -153,5 +176,7 @@ export {
     login ,
     getFollowing,
     unfollowUser,
-
+    addToFavorites,
+    removeFromFavorites,
+    
 };
