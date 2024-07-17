@@ -40,7 +40,7 @@ const updateSongController = async(req,res,next) => {
         console.log(songId);
         console.log(updatedSongData);
         const Song = await updateSong(songId,updatedSongData);
-        return res.status(200).json({"Updated to " : Song})
+        return res.status(200).json({"Updated from " : Song})
     }catch(error){
         next(error);
     }

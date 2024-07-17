@@ -14,6 +14,10 @@ const songSchema = new mongoose.Schema({
     CoverPicture:{
         data:Buffer,
         contentType:String,
+    },
+    artist:{
+        type:String,
+
     }
 
 })
