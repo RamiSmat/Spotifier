@@ -52,8 +52,8 @@ const searchYoutubeForSpotifySong = async (spotifyLink) => {
           });
         const query = generateSearchQuery(response.data);
         const YoutubeSearchResult = await youtubesearchapi.GetListByKeyword(query);
-        YoutubeSearchResult.items[0].link = `youtube.com/watch?v=${YoutubeSearchResult.items[0].id}`
-        return YoutubeSearchResult.items[0];
+        //YoutubeSearchResult.items[0].link = `youtube.com/watch?v=${YoutubeSearchResult.items[0].id}` THIS IS HOW TO SET THE LINK
+        return YoutubeSearchResult.items.slice(0,5);
     }catch(error){
         return error;
     }
@@ -62,6 +62,8 @@ const searchYoutubeForSpotifySong = async (spotifyLink) => {
 
 const downloadSpotifyTrack = async (link) => {
     const youtubeSong = await searchYoutubeForSpotifySong(link);
+    youtubeSong = youtubeSong[0]
+    youtubeSong.link=`youtube.com/watch?v=${YoutubeSearchResult.items[0].id}`
     const videoUrl = youtubeSong.link;
     if (videoUrl.startsWith('Link is a playlist')) {
       return youtubeSong;
@@ -92,5 +94,7 @@ const ensureDirectoryExistence = (filePath) => {
   fs.mkdirSync(dirname);
 };
 
-const res = await downloadSpotifyTrack("https://open.spotify.com/track/2ezMwQqlQ7tF93Q29fZVJu");
-console.log(res);
+export {
+  downloadSpotifyTrack,
+  searchYoutubeForSpotifySong
+}
